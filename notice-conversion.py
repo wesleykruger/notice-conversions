@@ -38,8 +38,6 @@ for file in os.listdir(source_directory):
             img_src = image['src']
             dictKey = img_src.split('/')[-1]
             DictValue = b64Dict[dictKey]
-            b64_tag = soup.new_tag('img')
-            b64_tag['src'] = 'data:image/jpeg;base64,' + DictValue
             image['src'] = 'data:image/jpeg;base64,' + DictValue
 
     # Write new file in output directory using modified HTML soup
