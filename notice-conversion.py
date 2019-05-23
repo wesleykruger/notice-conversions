@@ -1,5 +1,4 @@
 import os
-import fnmatch
 import shutil
 import base64
 from pathlib import Path
@@ -12,20 +11,18 @@ b64Dict = {}
 
 for file in os.listdir(image_directory):
     with open(os.path.join(image_directory, file), 'rb') as image_file:
-        print(type(image_file))
         encoded_string = base64.b64encode(image_file.read())
         b64Dict[file] = encoded_string.decode()
 
 
-with open(css_file, 'r') as f1:
-    css_contents = f1.readlines()
+with open(css_file, 'r') as css_file_read:
+    css_contents = css_file_read.readlines()
     css_contents_str = '\n\n' + ''.join(css_contents) + '\n\n'
 
 
 for file in os.listdir(source_directory):
-    count = 0
-    with open(os.path.join(Path(source_directory, file)), 'r', encoding='utf-8') as fp:
-        soup = BeautifulSoup(fp, 'html.parser')
+    with open(os.path.join(Path(source_directory, file)), 'r+', encoding='utf-8') as replace_run:
+        soup = BeautifulSoup(replace_run, 'html.parser')
         link_tag = soup.link
         if link_tag:
             style_tag = soup.new_tag('style')
@@ -38,11 +35,11 @@ for file in os.listdir(source_directory):
             DictValue = b64Dict[dictKey]
             b64_tag = soup.new_tag('img')
             b64_tag['src'] = 'data:image/jpeg;base64,' + DictValue
-            #print(image)
-            #print(dictKey)
-            #print(b64_tag)
-            #image.replace_with(b64_tag)
-            count +=1
-            if count > 1:
-                print(file)
+            image['src'] = 'data:image/jpeg;base64,' + DictValue
+
+        for image in soup.find_all('img'):
+            print(image)
+
+    with open(os.path.join(Path("C:/Users/wesleykruger/Documents/BBVA/notice-external-ref/fixed-notices", file)), 'w', encoding='utf-8') as replace_write:
+        replace_write.write(str(soup))
 
