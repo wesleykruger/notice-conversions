@@ -33,6 +33,7 @@ for file in os.listdir(source_directory):
             link_tag.replace_with(style_tag)
 
         # Find all images in the file, overwrite their src with our encoded value pulled from dictionary
+        # Do not replace entire image tag to retain any sizing attributes
         for image in soup.find_all('img'):
             img_src = image['src']
             dictKey = img_src.split('/')[-1]
