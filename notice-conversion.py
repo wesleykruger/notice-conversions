@@ -3,9 +3,9 @@ import base64
 from pathlib import Path
 from bs4 import BeautifulSoup
 
-source_directory = Path("C:/Users/wesleykruger/Documents/BBVA/notice-external-ref/notices")
-css_file = Path("C:/Users/wesleykruger/Documents/BBVA/notice-external-ref/letter.css")
-image_directory = Path("C:/Users/wesleykruger/Documents/BBVA/notice-external-ref/LetterImages")
+source_directory = Path("path/to/html/file")
+css_file = Path("path/to/css/file")
+image_directory = Path("path/to/image/directory")
 b64Dict = {}
 
 # Map out dictionary key/value pairs for encoded images
@@ -41,6 +41,6 @@ for file in os.listdir(source_directory):
             image['src'] = 'data:image/jpeg;base64,' + DictValue
 
     # Write new file in output directory using modified HTML soup
-    with open(os.path.join(Path("C:/Users/wesleykruger/Documents/BBVA/notice-external-ref/fixed-notices", file)), 'w', encoding='utf-8') as replace_write:
+    with open(os.path.join(Path("path/to/fixed-notices", file)), 'w', encoding='utf-8') as replace_write:
         replace_write.write(str(soup))
 
